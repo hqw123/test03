@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<C302Device>
+	<Control>0</Control>
+	<ServerIp>172.16.2.120</ServerIp>
+	<ServerPort>9999</ServerPort>
+</C302Device>

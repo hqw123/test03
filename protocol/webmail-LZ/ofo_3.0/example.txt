@@ -1,0 +1,119 @@
+typedef int OFOC_t; // 乱序处理器的句柄
+typedef int PIRS_t; // 结果集的句柄
+OFOC_t ofoCreate(); //创建句柄
+PIRS_t pirsCreate(); //创建句柄
+int registerPacketInfo(OFOC_t,PIRS_t ,PacketInfo *);//把PacketInfo提交给OFO
+void unregisterPacketInfo(OFOC_t,PacketInfo *);//卸载
+int resultSetNext(PIRS_t,PacketInfo *);//从结果集中取packetInfo
+void closeResultSet(PIRS_t);//关闭结果集句柄
+void closeOFO(OFOC_t); //关闭乱序句柄
+
+用法参照下面的例子，源代码中有比较详细的注释
+
+比如在webmail中
+
+static OFOC_t ofo; // ofo的得来是out of order
+static PIRS_t rset;
+void webmail_init()
+{
+	ofo=ofoCreate();
+	rset=pirsCreate();
+}
+
+int analyse_webmail(PacketInfo * packetInfo)
+{
+	if(packetInfo->bodyLen==0 && !packetInfo->tcp->fin && !packetInfo->tcp->rst)
+	{
+		return 0;
+	}
+	//--------------------------过滤-------------------------//
+	int is_cons;//方向
+	int type=0;
+	int flag=0;//标志是过滤的第一个包
+	MainInfo * mailInfo = find_entry(packetInfo,&is_cons);
+	if(!mailInfo)
+	{
+		type=mail_type(packetInfo);
+		if(type!=0)
+		{
+			mailInfo=insert_entry(packtInfo);
+			flag=1;
+		}
+		else return 0;
+	}
+	else type=mailInfo->type;
+	//--------------------------------------------------------//
+	
+	int f = registerPacketInfo(ofo,rset,packetInfo);
+	if(f&0x0f)
+		analyse_inner(packetInfo,type,mailInfo,flag);
+	if(f&0xf0)
+	{
+		while(resultSetNext(rset,packetInfo))
+		{
+			analyse_inner(packetInfo,type,mailInfo,flag);
+		}
+		clearResultSet(rset);
+	}
+	
+	return 1;
+}
+static void analyse_inner(PacketInfo * packetInfo,int type,MailInfo * mailInfo,flag)
+{
+	if(!flag)
+	{
+		mailInfo=find_entry(packetInfo,&is_cons,flag);
+	}
+	int rt;
+	switch(type>>8)
+	{
+	case 1:
+		rt=analyse_163(packetInfo,is_cons,type);
+		if(rt==1)
+		{
+			remove_entry(packetInfo);
+			unregisterPacketInfo(ofo,packetInfo); //密码或邮件接收完毕
+		}
+		break;
+	}
+}
+
+例2：
+irc模块，服务器端口是6667
+
+static OFOC_t ofo;
+static PIRS_t rset;
+void irc_init()
+{
+	ofo=ofoCreate();
+	rset=pirsCreate();
+}
+int isIrc(PacketInfo * packetInfo)
+{
+	if(packetInfo->pktType==TCP && (packetInfo->srcPort==6667||packetInfo->destPort==6667))
+	{
+		if(packetInfo->tcp->fin || packetInfo->tcp->rst)
+		{
+			irc_link_remove(packetInfo,packetInfo->srcPort==6667?0:1);
+			return 1;
+		}
+		if(packetInfo->bodyLen==0) return 1;
+		
+		
+		int f=registerPacketInfo(ofo,rset,packetInfo);
+		
+		if(f&0x0f)
+			analyse_irc(packetInfo);
+		if(f&0xf0)
+		{
+			while(resultSetNext(rset,packetInfo))
+			{
+				analyse_irc(packetInfo);
+			}
+			clearResultSet(rset);
+		}
+		
+		return 1;
+	}
+	return 0;
+}

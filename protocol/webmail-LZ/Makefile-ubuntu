@@ -1,0 +1,18 @@
+SRCS = webmail.c common.c analyse_sina.c analyse_21cn.c analyse_sohu.c analyse_163.c analyse_hotmail.c analyse_yahoo.c analyse_tom.c analyse_yeah.c analyse_eyou.c analyse_263.c analyse_qq.c analyse_sogou.c analyse_126.c analyse_188.c mail_type.c
+OBJS = webmail.o common.o analyse_sina.o analyse_21cn.o analyse_sohu.o analyse_163.o analyse_hotmail.o analyse_yahoo.o analyse_tom.o analyse_yeah.o analyse_eyou.o analyse_263.o analyse_qq.o analyse_sogou.o analyse_126.o analyse_188.o mail_type.o
+HEADS = common.h mail_type.h
+CC = gcc
+CFLAGS = -W -g
+
+%.o:%.c
+	@echo ""
+	@echo "=*= making object $@ =*="
+	${CC} ${CFLAGS} -c $< -o $@
+
+libwebmail.so : ${OBJS}
+	gcc -W -g -fPIC -shared -o libwebmail.so ${OBJS} -I /usr/include/libxml2 -lz -lxml2 -lpcre
+	cp libwebmail.so /usr/lib
+	cp libwebmail.so ./lib/
+
+clean:
+	/bin/rm -f core.* *.o libwebmail.so ./lib/libwebmail.so

@@ -1,0 +1,20 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<!DOCTYPE KDevPrjSession>
+<KDevPrjSession>
+ <DocsAndViews NumberOfDocuments="3" >
+  <Doc0 NumberOfViews="1" URL="file:///home/workflord/sjs/LZ-Project/Analyzer/webmail-LZ/common.c" >
+   <View0 line="2324" Type="Source" />
+  </Doc0>
+  <Doc1 NumberOfViews="1" URL="file:///home/workflord/sjs/LZ-Project/Analyzer/webmail-LZ/common.h" >
+   <View0 line="58" Type="Source" />
+  </Doc1>
+  <Doc2 NumberOfViews="1" URL="file:///home/workflord/sjs/LZ-Project/Analyzer/webmail-LZ/webmail.c" >
+   <View0 line="14" Type="Source" />
+  </Doc2>
+ </DocsAndViews>
+ <pluginList>
+  <kdevbookmarks>
+   <bookmarks/>
+  </kdevbookmarks>
+ </pluginList>
+</KDevPrjSession>

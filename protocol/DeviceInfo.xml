@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<DeviceInfo>
+	<dbServer>172.16.2.44</dbServer>
+	<database>copyspy</database>
+	<dbUser>spy2010</dbUser>
+	<dbPassword>baihongspy2010</dbPassword>	
+	<outEth>eth0</outEth>
+	<inEth>eth1</inEth>
+	<sslRunning>1</sslRunning>
+	<siteSwitch>1-2-3-4-5-6-7-9</siteSwitch>
+	<sslDomainName>fake.server.baihongsoft.com</sslDomainName>
+	<sslProxyMode>local</sslProxyMode>
+	<proxyEth>eth0</proxyEth>
+	<anlyzerStatus>1</anlyzerStatus>
+	<lzDataPath>/home</lzDataPath>
+	<lzWebCfgPath>/usr/local/tomcat/webapps/ROOT/data/trojan</lzWebCfgPath>
+	<!-- 1为中文，2为英文 -->
+	<language>1</language>
+</DeviceInfo>
