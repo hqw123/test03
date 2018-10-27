@@ -93,6 +93,9 @@ extern "C" int analyzer_init(int num)
     }
 #endif
 
+/*
+11111111111111111111111111111
+*/
     com_log_int("/spy/file/protocol.log", COM_LOG_LEVEL_WARN);
 
     //public
