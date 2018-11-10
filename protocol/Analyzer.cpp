@@ -50,7 +50,9 @@ bool Check();
 #endif
 void* writeServerIp(void*);
 bool CheckTime();
-
+/*
+111111111111111111111
+*/
 #if 0
 /* 打印程序信息 */
 static void print_program_info(const char *);
