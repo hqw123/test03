@@ -52,6 +52,7 @@ void* writeServerIp(void*);
 bool CheckTime();
 /*
 111111111111111111111
+2222222222222222222
 */
 #if 0
 /* 打印程序信息 */
@@ -95,16 +96,7 @@ extern "C" int analyzer_init(int num)
     }
 #endif
 
-<<<<<<< HEAD
 
-
-=======
-/*
-11111111111111111111111111111
-22222222222222222222222222222
-44444444444444444444444444444
-*/
->>>>>>> dev
     com_log_int("/spy/file/protocol.log", COM_LOG_LEVEL_WARN);
 
     //public
