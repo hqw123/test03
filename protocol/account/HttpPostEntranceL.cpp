@@ -22,6 +22,9 @@
 
 using namespace std;
 
+/*
+#######################
+*/
 HttpPostEntrance::HttpPostEntrance()
 {
 	counter = 0;
