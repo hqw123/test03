@@ -27,9 +27,7 @@ Luntan::Luntan()
 
 Luntan::~Luntan()
 {
-/*
-111111111111111111
-*/
+
 }
 
 void Luntan::init()
